@@ -14,20 +14,31 @@
 
 </head>
 <body>
+
     {% if message %}
         {{ message }}
     {% endif %}
-    <form class="form-signin" action="{% url 'login' %}" method="post" name="form"> 
+
+    <form class="form-signin" action="{% url 'facedet' %}" method="post" name="signup-form"> 
         {% csrf_token %}
+
+        <label for="fname">First name</label>
+        <input class="form-styling" type="text" name="fname" placeholder="" />
+
+        <label for="lname">Last name</label>
+        <input class="form-styling" type="text" name="lname" placeholder="" />
+
+        <label for="email">Email ID</label>
+        <input class="form-styling" type="email" name="email" placeholder="" />
+
         <label for="username">Username</label>
         <input class="form-styling" type="text" name="username" placeholder="" /> 
         
         <label for="password">Password</label> 
         <input class="form-styling" type="password" name="password" placeholder="" /> 
 
-        <div class="btn-animate"> <input type = "submit" value="Login" class="btn-singin"> </div>
+        <div class="btn-animate"> <input type = "submit" value="Proceed for face recognition" class="btn-singin"> </div>
     </form>
-         
-        <a href="SignupPage.html" target="_self">Do not have an account? </a>
+                
 </body>
 </html>
