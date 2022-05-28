@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from .FaceLoading import faceload
 from .FaceRecognition import facerec
+from .AgeDetection import agedet
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 
@@ -12,6 +13,7 @@ def home(request):
     return render(request,"HomePage.html")
 
 def login(request):
+    global uname
     if request.method == "POST":
         uname=request.POST["username"]
         pswd=request.POST["password"]     
@@ -50,4 +52,5 @@ def facedet(request):
     return render(request,"FaceDetect.html")
 
 def dashboard(request):
-    return render(request,"DashBoard.html")
+    age_val = agedet.predict_age()
+    return render(request,"DashBoard.html",{"age":age_val,"name":uname})
