@@ -19,20 +19,12 @@ class SimpleFacerec:
         :param images_path:
         :return:
         """
-        # Load Images
+        # Load Images from the directory
 
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
         MEDIA_ROOT = os.path.join(BASE_DIR,'ProfileImages\\')
 
-        #images_path = ["ProfileImages\\"+f for f in os.listdir(images_path) if os.path.isfile(os.path.join(images_path, f))]
-
         images_path = [os.path.join(MEDIA_ROOT,f) for f in os.listdir(MEDIA_ROOT)]
-
-        #images_path = glob.glob(os.path.join(images_path, "*.*"))
-
-        # print(onlyfiles)
-
-        # print("{} encoding images found.".format(len(images_path)))
 
         # Store image encoding and names
         for img_path in images_path:
@@ -51,10 +43,10 @@ class SimpleFacerec:
             # Store file name and file encoding
             self.known_face_encodings.append(img_encoding)
             self.known_face_names.append(filename)
-        #print("Encoding images loaded")
 
     def detect_known_faces(self, frame):
         small_frame = cv2.resize(frame, (0, 0), fx=self.frame_resizing, fy=self.frame_resizing)
+
         # Find all the faces and face encodings in the current frame of video
         # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
         rgb_small_frame = cv2.cvtColor(small_frame, cv2.COLOR_BGR2RGB)
@@ -67,21 +59,15 @@ class SimpleFacerec:
             matches = face_recognition.compare_faces(self.known_face_encodings, face_encoding)
             name = "Unknown"
 
-            # # If a match was found in known_face_encodings, just use the first one.
+            # If a match was found in known_face_encodings, just use the first one.
             if True in matches:
                 first_match_index = matches.index(True)
                 name = self.known_face_names[first_match_index]
-            
-            # Or instead, use the known face with the smallest distance to the new face
-            # face_distances = face_recognition.face_distance(self.known_face_encodings, face_encoding)
-            # best_match_index = np.argmin(face_distances)
-            # if matches[best_match_index]:
-            #     name = self.known_face_names[best_match_index]
+
             face_names.append(name)
+
         if(len(face_names)==0):
             face_names.append("Unknown")
-
-        #print(face_names)
 
         # Convert to numpy array to adjust coordinates with frame resizing quickly
         face_locations = np.array(face_locations)

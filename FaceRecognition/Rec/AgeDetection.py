@@ -1,4 +1,3 @@
-# Import Libraries
 import cv2
 import os
 import filetype
@@ -9,24 +8,20 @@ BASE_DIR = os.path.join(BASE_DIR,'Weights\\')
 
 # The model architecture
 AGE_MODEL = os.path.join(BASE_DIR,'deploy_age.prototxt')
-#AGE_MODEL = 'Weights/deploy_age.prototxt'
 
 # The model pre-trained weights
 AGE_PROTO = os.path.join(BASE_DIR,'age_net.caffemodel')
-#AGE_PROTO = 'Weights/age_net.caffemodel'
 
 # Each Caffe Model impose the shape of the input image also image preprocessing is required like mean
 # substraction to eliminate the effect of illunination changes
 MODEL_MEAN_VALUES = (78.4263377603, 87.7689143744, 114.895847746)
-# Represent the 8 age classes of this CNN probability layer
 
+# Represent the 8 age classes of this CNN probability layer
 AGE_INTERVALS = ['(00, 02)', '(04, 06)', '(08, 12)', '(15, 18)', '(20, 32)', '(38, 43)', '(48, 53)', '(60, 99)']
 
 FACE_PROTO = os.path.join(BASE_DIR, 'deploy.prototxt.txt')
-#FACE_PROTO = "Weights/deploy.prototxt.txt"
 
 FACE_MODEL = os.path.join(BASE_DIR,'res10_300x300_ssd_iter_140000_fp16.caffemodel')
-#FACE_MODEL = "Weights/res10_300x300_ssd_iter_140000_fp16.caffemodel"
 
 # Initialize frame size
 frame_width = 1280
@@ -75,7 +70,6 @@ def get_optimal_font_scale(text, width):
             return scale/10
     return 1
 
-# from: https://stackoverflow.com/questions/44650888/resize-an-image-without-distortion-opencv
 def image_resize(image, width = None, height = None, inter = cv2.INTER_AREA):
     # initialize the dimensions of the image to be resized and
     # grab the image size
@@ -127,32 +121,31 @@ class agedet:
                 # Predict Age
                 age_net.setInput(blob)
                 age_preds = age_net.forward()
-                #print("="*30, f"Face {i+1} Prediction Probabilities", "="*30)
-                # for i in range(age_preds[0].shape[0]):
-                #     print(f"{AGE_INTERVALS[i]}: {age_preds[0, i]*100:.2f}%")
+                
                 i = age_preds[0].argmax()
                 age = AGE_INTERVALS[i]
                 age_confidence_score = age_preds[0][i]
                 if(score<age_confidence_score):
                     score=age_confidence_score
                     final_age = age
-                # Draw the box
-                # label = f"Age:{age} - {age_confidence_score*100:.2f}%"
-                # print(label)
+               
                 # get the position where to put the text
                 yPos = start_y - 15
                 while yPos < 15:
                     yPos += 15
-                # # write the text into the frame
+                # write the text into the frame  -> can be uncommented to see the age
                 # cv2.putText(frame, label, (start_x, yPos),
                 #             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), thickness=2)
-                # # draw the rectangle around the face
+
+                # draw the rectangle around the face
                 cv2.rectangle(frame, (start_x, start_y), (end_x, end_y), color=(255, 0, 0), thickness=2)
+            
             # Display processed image
             cv2.imshow('Age Estimator', frame)
             if cv2.waitKey(1) == ord("q"):
                 break
-            # save the image if you want
+            
+            # save the image if required
             # cv2.imwrite("predicted_age.jpg", frame)
         cv2.destroyAllWindows()
 

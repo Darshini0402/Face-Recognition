@@ -18,10 +18,13 @@ class faceload:
 
             ret, frame = cap.read()
 
+            #writing the file url where the image must be saved
+
             BASE_DIR = os.path.dirname(os.path.abspath(__file__))
             MEDIA_ROOT = os.path.join(BASE_DIR,'ProfileImages\\')
             fname = MEDIA_ROOT + user_name + ".jpg"
             
+            #saving the image from video
             cv2.imwrite(fname,frame)
 
             face_locations, face_names = sfr.detect_known_faces(frame)
@@ -29,15 +32,15 @@ class faceload:
             for face_loc, name in zip(face_locations, face_names):
                 y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
 
+                #to draw rectangle
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0,0,200), 4)
             
             cv2.imshow("Frame", frame)
 
             key = cv2.waitKey(1)
 
+            #escape key is pressed 
             if key == 27:
-                # new_user = UserProfile.objects.create(username=user_name,profile=frame)
-                # new_user.save()
                 cap.release()
                 cv2.destroyAllWindows()  
                 return True
