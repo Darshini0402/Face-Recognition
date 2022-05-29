@@ -1,44 +1,48 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'Base.html' %}
 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    {% block page-title %} Login {% endblock %}        
+    
+    {% block content %}
+    
+        <div class="flex-container">
+            <div class="content-container">
 
-    <link rel="stylesheet" href="{% static 'Styles.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="{% static 'StyleJS.js' %}"></script>
+                {% if message %}
+                    {{ message }}
+                {% endif %}
 
-</head>
-<body>
+                <div class="form-container">
+                    
+                <form action="{% url 'facedet' %}" method="post" name="signup-form">
+                    {% csrf_token %}
 
-    {% if message %}
-        {{ message }}
-    {% endif %}
+                    <h1> Sign Up </h1>
+                    <br> 
+                    <span class="subtitle">FIRST NAME:</span>
+                    <br>
+                    <input type="text" name="fname" value="">
+                    <br>
+                    <span class="subtitle">LAST NAME:</span>
+                    <br>
+                    <input type="text" name="lname" value="">
+                    <br>
+                    <span class="subtitle">EMAIL:</span>
+                    <br>
+                    <input type="email" name="email" value="">
+                    <br>
+                    <span class="subtitle">USERNAME:</span>
+                    <br>
+                    <input type="text" name="username" value="">
+                    <br>
+                    <span class="subtitle">PASSWORD:</span>
+                    <br>
+                    <input type="password" name="password" value="">
+                    <br><br>
+                    <input type="submit" value="Proceed for Face Recognition" class="submit-btn">
+                    <br>
+                </form>
 
-    <form class="form-signin" action="{% url 'facedet' %}" method="post" name="signup-form"> 
-        {% csrf_token %}
-
-        <label for="fname">First name</label>
-        <input class="form-styling" type="text" name="fname" placeholder="" />
-
-        <label for="lname">Last name</label>
-        <input class="form-styling" type="text" name="lname" placeholder="" />
-
-        <label for="email">Email ID</label>
-        <input class="form-styling" type="email" name="email" placeholder="" />
-
-        <label for="username">Username</label>
-        <input class="form-styling" type="text" name="username" placeholder="" /> 
-        
-        <label for="password">Password</label> 
-        <input class="form-styling" type="password" name="password" placeholder="" /> 
-
-        <div class="btn-animate"> <input type = "submit" value="Proceed for face recognition" class="btn-singin"> </div>
-    </form>
-                
-</body>
-</html>
+                </div>
+            </div>
+        </div>
+    {% endblock %}

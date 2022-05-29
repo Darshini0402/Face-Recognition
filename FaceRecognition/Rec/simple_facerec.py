@@ -1,3 +1,4 @@
+from email import message
 import face_recognition
 import cv2
 import os
@@ -42,7 +43,10 @@ class SimpleFacerec:
             basename = os.path.basename(img_path)
             (filename, ext) = os.path.splitext(basename)
             # Get encoding
-            img_encoding = face_recognition.face_encodings(rgb_img)[0]
+            try:
+                img_encoding = face_recognition.face_encodings(rgb_img)[0]
+            except:
+                message = "Place your face properly"
 
             # Store file name and file encoding
             self.known_face_encodings.append(img_encoding)

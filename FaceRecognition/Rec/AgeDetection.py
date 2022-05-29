@@ -20,7 +20,7 @@ AGE_PROTO = os.path.join(BASE_DIR,'age_net.caffemodel')
 MODEL_MEAN_VALUES = (78.4263377603, 87.7689143744, 114.895847746)
 # Represent the 8 age classes of this CNN probability layer
 
-AGE_INTERVALS = ['(0, 2)', '(4, 6)', '(8, 12)', '(15, 18)', '(20, 32)', '(38, 43)', '(48, 53)', '(60, 100)']
+AGE_INTERVALS = ['(00, 02)', '(04, 06)', '(08, 12)', '(15, 18)', '(20, 32)', '(38, 43)', '(48, 53)', '(60, 99)']
 
 FACE_PROTO = os.path.join(BASE_DIR, 'deploy.prototxt.txt')
 #FACE_PROTO = "Weights/deploy.prototxt.txt"

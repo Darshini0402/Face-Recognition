@@ -12,7 +12,7 @@ class facerec:
         cap = cv2.VideoCapture(0)
         sfr.load_encoding_images("ProfileImages/")
         cnt = 0
-        while True:
+        for i in range (100):
             ret, frame = cap.read()
 
             face_locations, face_names = sfr.detect_known_faces(frame)
@@ -22,10 +22,12 @@ class facerec:
                     return True
                 elif(face_names[0]=="Unknown"):
                     cnt+=1
-            if cnt>=15:
+            if cnt==100:
                 cap.release()
                 cv2.destroyAllWindows()  
                 return False
+
+            print(face_names)
 
             for face_loc, name in zip(face_locations, face_names):
                 y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]

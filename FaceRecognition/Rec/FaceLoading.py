@@ -1,11 +1,13 @@
+import profile
 import cv2
 import os
 from .simple_facerec import SimpleFacerec
 import face_recognition
+from .models import UserProfile
 
 class faceload:
 
-    def facesave(username):
+    def facesave(user_name):
 
         sfr = SimpleFacerec()
 
@@ -18,7 +20,7 @@ class faceload:
 
             BASE_DIR = os.path.dirname(os.path.abspath(__file__))
             MEDIA_ROOT = os.path.join(BASE_DIR,'ProfileImages\\')
-            fname = MEDIA_ROOT + username + ".jpg"
+            fname = MEDIA_ROOT + user_name + ".jpg"
             
             cv2.imwrite(fname,frame)
 
@@ -32,8 +34,13 @@ class faceload:
             cv2.imshow("Frame", frame)
 
             key = cv2.waitKey(1)
+
             if key == 27:
-                break
+                # new_user = UserProfile.objects.create(username=user_name,profile=frame)
+                # new_user.save()
+                cap.release()
+                cv2.destroyAllWindows()  
+                return True
 
         cap.release()
-        cv2.destroyAllWindows()  
+        cv2.destroyAllWindows() 
