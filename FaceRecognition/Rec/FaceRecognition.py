@@ -27,7 +27,7 @@ class facerec:
                 cv2.destroyAllWindows()  
                 return False
 
-            print(face_names)
+            #print(face_names)
 
             for face_loc, name in zip(face_locations, face_names):
                 y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]

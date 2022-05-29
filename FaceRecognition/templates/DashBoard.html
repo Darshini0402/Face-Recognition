@@ -1,29 +1,40 @@
 {% extends 'Base.html' %}
 
-    {% block page-title %} DashBoard {% endblock %}        
-    
-    {% block content %}
-    
-        <div class="row">
-            <h2 style="color: whitesmoke; text-align: center;"> Welcome {{ name }}!!! </h2>
-            <button style="top: 0; right: 0; position: absolute;" class="submit-btn"></button>
-        </div> 
- 
-        {% for movie in movies %}
-            {% for m in movie_custom %}
-                <div class="row">                     
-                    <div class="column">
-                        {% if movie.name == m.name %}
-                            <img src="{{ m.poster.url }}" height="400" width="200">
-                        {% endif %}
-                    </div>
-                    <div class="column">
-                        {% if movie.name == m.name %}
-                            <h4 style="color: whitesmoke; text-align: center;"> {{ m.name }} </h4>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endfor %} 
-        {% endfor %}
-                
-    {% endblock %}
+{% block page-title %} DashBoard {% endblock %}
+
+{% block content %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+</style>
+
+<div class="row">
+    <h2
+        style="color: whitesmoke; text-align: center;padding: 0 3%; font-family: 'Rubik', sans-serif;font-size: 2.5rem; margin-top: 0.5rem;">
+        Welcome
+        {{ name }}! </h2>
+    <button style="top: 0; right: 0; position: absolute;" class="submit-btn"></button>
+</div>
+
+<div class="row" style="padding: 0 3%; ">
+    {% for movie in movies %}
+    {% for m in movie_custom %}
+    {% if movie.name == m.name %}
+    <div class="column">
+        <img src="{{ m.poster.url }}" height="480" width="250"> <br>
+        <!-- <div class="column"> -->
+        {% if movie.name == m.name %}
+        <h3 style="color: whitesmoke; font-family: 'Rubik', sans-serif; margin-top: 0.5rem;
+        font-size: 1.8rem;"> {{ m.name }}    <a href="#" class="btn btn-info btn-lg">
+            <span class="glyphicon glyphicon-play"></span> Play </a> </h3>  
+
+        {% endif %}
+        <!-- </div> -->
+    </div>
+
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+</div>
+
+{% endblock %}
