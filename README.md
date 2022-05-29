@@ -32,5 +32,7 @@ Reference : YouTube Link and Document Link
 8. To run the web application navigate to Face-Recognition\FaceRecognition and execute: python manage.py runserver
 
 YouTube Link : https://www.youtube.com/watch?v=xaDJ5xnc8dc
+
 Document Link : https://face-recognition.readthedocs.io/en/latest/installation.html
+
 Module Installation GitHub Repository Link : https://github.com/ageitgey/face_recognition
